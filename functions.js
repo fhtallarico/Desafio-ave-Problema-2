@@ -1,8 +1,13 @@
 const axios = require("axios");
 
 const BASE_URL = "https://pokeapi.co/api/v2";
-// ** typeName: string "Nombre del tipo por el que se debe filtrar"
-// Funcion que retorna la cantidad total de pokemons con un tipo
+/**
+ * Función que retorna la cantidad total de pokémon con un tipo específico.
+ *
+ * @param {string} typeName - Nombre del tipo por el que se debe filtrar.
+ * @returns {Promise<number>} - Retorna una promesa que resuelve con la cantidad total de pokémon con el tipo especificado.
+ * @throws {Error} - Error lanzado si ocurre un problema en la consulta a la API.
+ */
 const getTotalPokemonsByType = async (typeName) => {
   try {
     const type = await getPokemonTypeByTypeName(typeName); 
@@ -12,9 +17,14 @@ const getTotalPokemonsByType = async (typeName) => {
   }
 };
 
-// ** typeName1: string  "Nombre del primer tipo a filtrar"
-// ** typeName2: string  "Nombre del segundo tipo a filtrar"
-// Funcion que retorna los nombres de los pokemons con 2 tipos
+/**
+ * Función que retorna los nombres de los pokémon con dos tipos específicos.
+ *
+ * @param {string} typeName1 - Nombre del primer tipo a filtrar.
+ * @param {string} typeName2 - Nombre del segundo tipo a filtrar.
+ * @returns {Promise<string[]>} - Retorna una promesa que resuelve con un arreglo de nombres de pokémon que cumplen con ambos tipos especificados.
+ * @throws {Error} - Error lanzado si ocurre un problema en la consulta a la API.
+ */
 const getPokemonNamesByTwoTypes = async (typeName1, typeName2) => {
   try {
     const type1 = await getPokemonTypeByTypeName(typeName1);
@@ -32,8 +42,13 @@ const getPokemonNamesByTwoTypes = async (typeName1, typeName2) => {
   }
 };
 
-// ** name: string  "Nombre del pokemon a buscar"
-// Funcion que retorna el id de un pokemon filtrado por nombre
+/**
+ * Función que retorna el número de un pokémon filtrado por nombre.
+ *
+ * @param {string} name - Nombre del pokémon a buscar.
+ * @returns {Promise<number>} - Retorna una promesa que resuelve con el número del pokémon encontrado.
+ * @throws {Error} - Error lanzado si ocurre un problema en la consulta a la API.
+ */
 const getPokemonNumberByName = async (name) => {
   try {
     const pokemon = await getPokemonListByNameOrId(name);
@@ -43,8 +58,13 @@ const getPokemonNumberByName = async (name) => {
   }
 };
 
-// ** pokemonId: number  "Id del pokemon a buscar"
-// Funcion que retorna las stats de un pokemon filtrado por nombre
+/**
+ * Función que retorna las stats de un pokémon filtrado por número.
+ *
+ * @param {number} pokemonId - ID del pokémon a buscar.
+ * @returns {Promise<object>} - Retorna una promesa que resuelve con un objeto que contiene las stats del pokémon.
+ * @throws {Error} - Error lanzado si ocurre un problema en la consulta a la API.
+ */
 const getStatsByPokemonId = async (pokemonId) => {
   try {
     const pokemon = await getPokemonListByNameOrId(pokemonId);
@@ -59,9 +79,14 @@ const getStatsByPokemonId = async (pokemonId) => {
 };
 
 
-// ** idArray: numbner[]  "Arreglo de ids de pokemons a buscar"
-// ** order: string  "Valor por el cual se debe filtrar el resultado de la busqueda por ids"
-// Funcion que retorna un arreglo de info de pokemons ordenados por el ordenador
+/**
+ * Función que retorna un arreglo de información de pokémon ordenados según el parámetro de ordenamiento especificado.
+ *
+ * @param {number[]} idArray - Arreglo de IDs de pokémon a buscar.
+ * @param {string} order - Valor por el cual se debe filtrar el resultado de la búsqueda por IDs. Debe ser "name", "weight" o "type".
+ * @returns {Promise<object[]>} - Retorna una promesa que resuelve con un arreglo de objetos que contienen información de los pokémon ordenados según el parámetro especificado.
+ * @throws {Error} - Error lanzado si ocurre un problema en la consulta a la API o si el parámetro de orden es inválido.
+ */
 const getPokemonsInfoByIds = async (idArray, order) => {
   try {
     const pokemonPromises = idArray.map(async (id) => {
@@ -94,9 +119,14 @@ const getPokemonsInfoByIds = async (idArray, order) => {
   }
 };
 
-// ** pokemonId: number  "Id del pokemon a buscar"
-// ** typeName: string  "Nombre del tipo a validar"
-// Funcion que retorna un valor booleano definiendo si un pokemon buscado por id tiene un tipo ene specifico
+/**
+ * Función que retorna un valor booleano indicando si un pokémon buscado por ID tiene un tipo específico.
+ *
+ * @param {number} pokemonId - ID del pokémon a buscar.
+ * @param {string} typeName - Nombre del tipo a validar.
+ * @returns {Promise<boolean>} - Retorna una promesa que resuelve con un valor booleano indicando si el pokémon tiene el tipo especificado.
+ * @throws {Error} - Error lanzado si ocurre un problema en la consulta a la API.
+ */
 const hasPokemonType = async (pokemonId, typeName) => {
   try {
     const pokemon = await getPokemonListByNameOrId(pokemonId)
@@ -108,8 +138,13 @@ const hasPokemonType = async (pokemonId, typeName) => {
   }
 };
 
-// ** index: number | string  "Valor para filtrar los resultados de la API, puede ser un id numerico o un name"
-// Funcion que retorna un listado de pokemon filtrados
+/**
+ * Función que retorna un listado de pokémon filtrados por nombre o ID.
+ *
+ * @param {number|string} index - Valor para filtrar los resultados de la API, puede ser un ID numérico o un nombre.
+ * @returns {Promise<object>} - Retorna una promesa que resuelve con los datos del pokémon encontrado.
+ * @throws {Error} - Error lanzado si ocurre un problema en la consulta a la API.
+ */
 const getPokemonListByNameOrId = async (index) => {
   try {
     return axios.get(`${BASE_URL}/pokemon/${index}`);
@@ -118,8 +153,13 @@ const getPokemonListByNameOrId = async (index) => {
   }
 };
 
-// ** name: string  "Nombre del tipo a buscar"
-// Funcion que retorna todos los pokemon por un tipo en epecifico
+/**
+ * Función que retorna todos los pokémon de un tipo específico.
+ *
+ * @param {string} name - Nombre del tipo a buscar.
+ * @returns {Promise<object>} - Retorna una promesa que resuelve con los datos del tipo encontrado, incluyendo un listado de los pokémon que cumplen con ese tipo.
+ * @throws {Error} - Error lanzado si ocurre un problema en la consulta a la API.
+ */
 const getPokemonTypeByTypeName = async (name) => {
   try {
     return axios.get(`${BASE_URL}/type/${name}`);
